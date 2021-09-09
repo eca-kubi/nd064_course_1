@@ -28,5 +28,5 @@ jobs:
         with:
           push: true
           tags: ecakubi/techtrends:latest
-          context: ./project/
+          context: ../project
           file: ./project/techtrends/Dockerfile
