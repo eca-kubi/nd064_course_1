@@ -31,6 +31,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: techtrends:latest
+          tags: ecakubi/techtrends:latest
           context: ./project/techtrends
           file: ./project/techtrends/Dockerfile
