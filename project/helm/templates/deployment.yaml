@@ -17,14 +17,14 @@ spec:
         app: techtrends
     spec:
       containers:
-      - image: { {  .Values.image.repository } }:{{ .Values.image.tag }}
+      - image: { { .Values.image.repository } }:{{ .Values.image.tag }}
         name: techtrends
         ports:
         - containerPort: 3111
           protocol: TCP
         livenessProbe:
           httpGet:
-            path: { {  .Values.livenessProbe.path } }
+            path: { { .Values.livenessProbe.path } }
             port: {{ .Values.containerPort }}
         readinessProbe:
           httpGet:
