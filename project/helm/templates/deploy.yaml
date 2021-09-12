@@ -4,7 +4,7 @@ metadata:
   labels:
     app: techtrends
   name: techtrends
-  namespace: { { .Values.namespace.name } }
+  namespace: {{ .Values.namespace.name }}
 spec:
   replicas: 1
   selector:
@@ -24,7 +24,7 @@ spec:
           protocol: TCP
         livenessProbe:
           httpGet:
-            path: { { .Values.livenessProbe.path } }
+            path: {{ .Values.livenessProbe.path }}
             port: {{ .Values.containerPort }}
         readinessProbe:
           httpGet:
