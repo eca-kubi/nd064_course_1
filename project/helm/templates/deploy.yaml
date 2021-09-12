@@ -17,7 +17,7 @@ spec:
         app: techtrends
     spec:
       containers:
-      - image: ecakubi/techtrends:latest
+      - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         name: techtrends
         ports:
         - containerPort: 3111
