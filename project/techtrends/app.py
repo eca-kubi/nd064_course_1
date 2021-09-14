@@ -4,8 +4,6 @@ import sys
 
 from flask import Flask, json, render_template, request, url_for, redirect, flash
 
-# Count database connections
-connection_count = 0
 
 
 # Function to get a database connection.
@@ -18,11 +16,10 @@ def get_db_connection():
 
 # Function to get a post using its ID
 def get_post(post_id):
-    global connection_count
     connection = get_db_connection()
     post = connection.execute('SELECT * FROM posts WHERE id = ?',
                               (post_id,)).fetchone()
-    connection_count += 1
+    app.config['connection_counter'] += 1
     connection.close()
     return post
 
@@ -30,6 +27,8 @@ def get_post(post_id):
 # Define the Flask application
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'archangel'
+# Count database connections
+app.config['connection_counter'] = 0
 
 
 # Define the main route of the web application
@@ -88,10 +87,9 @@ def create():
 
 # Define a function to return all posts
 def get_posts():
-    global connection_count
     connection = get_db_connection()
     posts = connection.execute('SELECT * FROM posts').fetchall()
-    connection_count += 1
+    app.config['connection_counter'] += 1
     connection.close()
     return posts
 
@@ -113,7 +111,7 @@ def metrics():
     post_count = len(get_posts())
     response = app.response_class(
         status=200,
-        response=json.dumps({"db_connection_count": connection_count, "post_count": post_count}),
+        response=json.dumps({"db_connection_count": app.config['connection_counter'], "post_count": post_count}),
         mimetype='application/json'
     )
 
