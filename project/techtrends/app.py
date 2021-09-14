@@ -123,6 +123,9 @@ if __name__ == "__main__":
     # Configure logger with handlers
     stdout_handler = logging.StreamHandler(sys.stdout)
     stderr_handler = logging.StreamHandler(sys.stderr)
+    formatter = logging.Formatter("%(levelname)s: [%(asctime)s] %(message)s")
+    stderr_handler.setFormatter(formatter)
+    stdout_handler.setFormatter(formatter)
 
     logging.basicConfig(
         level=logging.DEBUG,
